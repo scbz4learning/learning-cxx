@@ -5,6 +5,8 @@
 int main(int argc, char **argv) {
     // TODO: 补全变量定义并打印加法运算
     // x ?
+    // float x = atof (argv[1]);
+    float x = 1.0;
     std::cout << x << " + " << x << " = " << x + x << std::endl;
     return 0;
 }
