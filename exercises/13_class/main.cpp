@@ -15,6 +15,25 @@ class Fibonacci {
 public:
     // TODO: 实现构造器
     // Fibonacci()
+    Fibonacci() {
+        // I do think this way is better:
+        //
+        // cache[0] = 0;
+        // cache[1] = 1;
+        // for (cached = 1; cached < 15;){
+        //     cache[++cached] = cache[cached - 1] + cache[cached - 2];
+        // }
+        //
+        // But it seems that this way works for exercise
+        //
+        // get(15);
+        //
+        // No, this is enough
+        
+        cache[0] = 0;
+        cache[1] = 1;
+        cached = 2;
+    }
 
     // TODO: 实现正确的缓存优化斐波那契计算
     size_t get(int i) {
