@@ -18,6 +18,46 @@ std::vector<udim> strides(std::vector<udim> const &shape) {
     // TODO: 完成函数体，根据张量形状计算张量连续存储时的步长。
     // READ: 逆向迭代器 std::vector::rbegin <https://zh.cppreference.com/w/cpp/container/vector/rbegin>
     //       使用逆向迭代器可能可以简化代码
+
+    // C-style for loop:
+    // segementation fault!
+    // Why?
+    // After i=0, i-- will cause the fault
+    // for (auto i = shape.size() - 2; i >= 0u; i--)
+    // {
+    //     strides[i] = strides[i + 1] * shape[i + 1];
+    // }
+     
+    
+    // Adjusted C-style for loop:
+    // strides[shape.size() - 1] = 1;
+    // for (auto i = shape.size() - 1; i > 0u; i--)
+    // {
+    //     strides[i - 1] = strides[i] * shape[i];
+    // }
+
+    // Mordern Cpp-style rbegin:
+    // However, this seems naive as well
+    // Cpp does not want programmer do this brainstorm
+    // strides[shape.size() - 1] = 1;
+    // for (auto i = 1u; strides.rbegin() + i != strides.rend(); i++)
+    // {
+    //     *(strides.rbegin() + i) = *(strides.rbegin() + i - 1) * *(shape.rbegin() + i - 1);
+    // }
+
+    // rbegin reverse the orientation, even for new vector...
+    auto ans = strides.rbegin();
+    *ans = 1;
+    for (auto it = shape.rbegin();
+         it + 1 != shape.rend();
+         ++it, ++ans) {
+        // ans is a pointer
+        // ans goes reversely
+        // array-like style is supported!
+        // THAT'S CRAZY!!!
+        ans[1] = ans[0] * *it;
+    }
+
     return strides;
 }
 
